@@ -36,11 +36,15 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: (CatalogModel.items != null && CatalogModel.items!.isNotEmpty)? ListView.builder(
+        child: (CatalogModel.items != null && CatalogModel.items!.isNotEmpty)
+            ? GridView.builder(
           itemCount: CatalogModel.items!.length,
-          itemBuilder: (context, index) =>
-            ItemWidget(item: CatalogModel.items![index],
-            ),
+          itemBuilder: (context, index) => ItemWidget(item: CatalogModel.items![index],),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+          ),
         ): Center(
              child: CircularProgressIndicator(), 
         ),
