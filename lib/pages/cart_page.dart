@@ -1,3 +1,4 @@
+import 'package:first_flutter_project/core/store.dart';
 import 'package:first_flutter_project/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flutter_project/widgets/themes.dart';
@@ -25,17 +26,15 @@ class CartPage extends StatelessWidget {
 }
 class _CartTotal extends StatelessWidget {
 
-
-
   @override
   Widget build(BuildContext context) {
-    final _cart = CartModel();
+    final CartModel? _cart = (VxState.store as MyStore).cart;
     return SizedBox(
       height: 200,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          "\$${_cart.totalPrice}".text.xl5.color(context.theme.accentColor).make(),
+          "\$${_cart!.totalPrice}".text.xl5.color(context.theme.accentColor).make(),
           30.widthBox, 
           ElevatedButton(onPressed: (){
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: "Buying not supported yet".text.make(),
@@ -51,11 +50,11 @@ class _CartTotal extends StatelessWidget {
 }
 
 class _CartList extends StatelessWidget {
-  final _cart = CartModel();
 
   @override
   Widget build(BuildContext context) {
-    return _cart.items.isEmpty? "Nothing to show".text.xl3.makeCentered()
+    final CartModel? _cart = (VxState.store as MyStore).cart;
+    return _cart!.items.isEmpty? "Nothing to show".text.xl3.makeCentered()
    : ListView.builder(
       itemCount: _cart.items.length,
         itemBuilder: (context,index) => ListTile(
